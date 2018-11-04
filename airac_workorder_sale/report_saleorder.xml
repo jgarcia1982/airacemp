@@ -1,0 +1,14 @@
+<odoo>
+    <template id="airac_report_saleorder" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@t-if='doc.client_order_ref']" position="replace">
+            <div t-if="doc.client_order_ref" class="col-xs-3">
+                <strong>Your Reference:</strong>
+                <p t-field="doc.client_order_ref"/>
+            </div>
+            <div t-if="doc.x_workorder" class="col-xs-3">
+                <strong>Orden de Trabajo:</strong>
+                <p t-field="doc.x_workorder"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

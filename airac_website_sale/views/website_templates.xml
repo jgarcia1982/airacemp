@@ -205,6 +205,8 @@
 
                                 // CLOSE MODAL
                                 $("#close_sale_order").trigger('click');
+
+                                window.location = '/customer_orders_state';
                             }
                         });
                         

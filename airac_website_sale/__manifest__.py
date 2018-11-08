@@ -16,7 +16,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['website_sale_digital'],
+    'depends': ['documents','website_sale_digital','airac_sale','airac_inventory','airac_hr'],
 
     # always loaded
     'data': [

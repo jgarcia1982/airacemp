@@ -1,0 +1,10 @@
+#. module: airac_report_quotation
+#: model:ir.ui.view,arch_db:airac_report_quotation.airac_report_commitment_date
+msgid "<strong>Salesperson:</strong>"
+msgstr "<strong>Comercial:</strong>"
+
+#. module: airac_report_quotation
+#: model:ir.ui.view,arch_db:airac_report_quotation.airac_report_commitment_date
+msgid "<strong>Commitment Date:</strong>"
+msgstr "<strong>Fecha de Compromiso:</strong>"
+

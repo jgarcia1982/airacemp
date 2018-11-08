@@ -1,0 +1,14 @@
+<odoo>
+    <template id="airac_report_commitment_date" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@t-if='doc.user_id.name']" position="replace">
+            <div t-if="doc.commitment_date and doc.state in ['draft','sent']" class="col-xs-3">
+                <strong>Commitment Date:</strong>
+                <p t-field="doc.commitment_date"/>
+            </div>
+            <div t-if="doc.user_id.name" class="col-xs-3">
+                <strong>Salesperson:</strong>
+                <p t-field="doc.user_id"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

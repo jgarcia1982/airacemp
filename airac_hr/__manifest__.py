@@ -20,6 +20,6 @@
 
     # always loaded
     'data': [
-        
+        'data/hr_job.xml'
     ]
 }

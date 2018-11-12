@@ -24,6 +24,7 @@
         'views/website_templates.xml',
         'views/res_partner.xml',
         'views/product_product.xml',
+        'templates/mail_templates.xml',
     ],
     "post_init_hook": "post_init_hook"
 }

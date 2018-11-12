@@ -75,7 +75,7 @@ class WebsiteSale(http.Controller):
             'client_order_ref': kw['customer_so_ref'].strip()
         })
 
-        if 'file' in kw.keys():
+        if kw['file'] != 'undefined':
 
             ctx = http.request._context.copy()
             ctx.pop('default_type', False)
@@ -97,5 +97,24 @@ class WebsiteSale(http.Controller):
             })
 
             index += 1
+
+        # NEW SALE ORDER NOTIFY EMPLOYEES
+
+        job_ids = []
+        job_ids.append(http.request.env.ref('airac_hr.airac_hr_job_customer_contact').id)
+        job_ids.append(http.request.env.ref('airac_hr.airac_hr_job_production').id)
+        ctx = http.request._context.copy()
+        ctx['SALE_ORDER_NUM'] = order_id.name
+        ctx['CUSTOMER_NAME'] = user_id.partner_id.name
+        ctx['SALE_ORDER_URL'] = '/my/orders/%s' % order_id.id
+        
+        for employee_id in http.request.env['hr.employee'].sudo().search([('job_id', 'in', job_ids)]):
+
+            if not employee_id.work_email.strip():
+                continue
+
+            template = http.request.env.ref('airac_website_sale.new_saleorder_template')
+
+            http.request.env['mail.template'].browse(template.id).sudo().with_context(ctx).send_mail(employee_id.id, force_send=True)
 
         return order_id.name

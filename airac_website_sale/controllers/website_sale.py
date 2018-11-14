@@ -14,10 +14,10 @@ class WebsiteSale(http.Controller):
     @http.route('/customer_new_order', type='http', auth="user", website=True)
     def new_sale_order(self, **kw):
 
-        user_id = http.request.env['res.users'].browse([http.request.env.uid])
+        user_id = http.request.env['res.users'].sudo().browse([http.request.env.uid])
 
         return http.request.render('airac_website_sale.website_new_sale_order_template', {
-            'product_ids': user_id.partner_id.airac_user_product_ids
+            'product_ids': user_id.sudo().partner_id.airac_user_product_ids
         })
 
     @http.route('/customer_orders_state', type='http', auth="user", website=True)
@@ -30,7 +30,7 @@ class WebsiteSale(http.Controller):
         customer_ids.append(partner_id.id)
         order_ids = http.request.env['sale.order'].sudo().search([
             ('partner_id', 'in', customer_ids),
-            ('state', 'in', ['order','sale'])
+            ('state', 'in', ['sent','sale','send','done'])
         ])
 
         return http.request.render('airac_website_sale.website_sale_order_state_template', {

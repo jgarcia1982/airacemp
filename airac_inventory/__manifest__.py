@@ -20,6 +20,7 @@
 
     # always loaded
     'data': [
-        
+        'data/inventory_data.xml',
+        'views/stock_picking.xml'
     ]
 }

@@ -20,6 +20,6 @@
 
     # always loaded
     'data': [
-        
+        'views/sale_order.xml'
     ]
 }

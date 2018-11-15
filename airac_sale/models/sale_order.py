@@ -23,6 +23,9 @@ class SaleOrder(models.Model):
         string='Entrada de inventario',
         comodel_name='stock.picking'
     )
+    commitment_date = fields.Datetime(
+        string='Fecha de entrega compromiso'
+    )
 
     @api.multi
     def action_so_production(self):

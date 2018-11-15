@@ -1,7 +1,7 @@
 <openerp>
     <data>
 
-        <!-- CFDI MAIL SEND TOKEN -->
+        <!-- MAIL TEMPLATES-->
 
         <record id="new_saleorder_template" model="mail.template">
             <field name="name">NEW_SALEORDER</field>
@@ -26,6 +26,14 @@
 
             ]]></field>
         </record>
+
+        <!-- WEBSITE TEMPLATES -->
+
+        <template id="airac_sale_order_portal_template" inherit_id="sale.sale_order_portal_content">
+            <xpath expr="//div[@id='informations']//span[@t-field='sale_order.create_date']" position="after">
+                <br/> <strong t-if="sale_order.commitment_date">Fecha de entrega compromiso:</strong> <span t-field="sale_order.commitment_date" t-options='{"widget": "date"}'/>
+            </xpath>
+        </template>
 
     </data>
 </openerp>

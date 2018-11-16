@@ -13,10 +13,10 @@
 
     # Categories can be used to filter modules in modules listing
     'category': 'Sales',
-    'version': '0.1',
+    'version': '1.0',
 
     # any module necessary for this one to work correctly
-    'depends': ['document','website','airac_sale','airac_inventory','airac_hr'],
+    'depends': ['product','document','website','hr','sale','airac_hr','airac_sale','airac_inventory'],
 
     # always loaded
     'data': [

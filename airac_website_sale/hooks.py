@@ -10,6 +10,7 @@ _logger = logging.getLogger(__name__)
 
 def post_init_hook(cr, registry):
     _order_website_sale_menus(cr, registry)
+    _remove_translations(cr, registry)
 
 
 def _order_website_sale_menus(cr, registry):
@@ -28,3 +29,17 @@ def _order_website_sale_menus(cr, registry):
         for child_menu in child_menus:
             child_menu.parent_path = '%s/%s/%s/' % (main_menu.id, parent_menu.id, child_menu.id)
             child_menu.parent_id = parent_menu.id
+
+def _remove_translations(cr, registry):
+    env = api.Environment(cr, SUPERUSER_ID, {})
+
+    translation_table = env['ir.translation']
+    translation_table.search([('src', '=', '<span>By signing this proposal, I agree to the following terms:</span>')]).write({
+        'value': '<span>Al firmar esta propuesta, acepto los siguientes términos:</span>'
+    })
+    translation_table.search([('src', '=', '<span>Accepted on the behalf of:</span>')]).write({
+        'value': '<span>Aceptado en nombre de:</span>'
+    })
+    translation_table.search([('src', '=', '<span>For an amount of:</span>')]).write({
+        'value': '<span>Por la cantidad de:</span>'
+    })

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="airac_hr_job_customer_contact" model="hr.job">
+        <field name="name">Atencion a Clientes</field>
+    </record>
+
+    <record id="airac_hr_job_production" model="hr.job">
+        <field name="name">Producción</field>
+    </record>
+
+</odoo>

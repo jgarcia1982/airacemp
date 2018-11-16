@@ -1,0 +1,39 @@
+<openerp>
+    <data>
+
+        <!-- MAIL TEMPLATES-->
+
+        <record id="new_saleorder_template" model="mail.template">
+            <field name="name">NEW_SALEORDER</field>
+            <field name="subject">Nuevo pedido de venta</field>
+            <field name="email_from">ventas@eiracempaques.com</field>
+            <field name="email_to">${object.work_email}</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="body_html"><![CDATA[
+
+
+                <div style="height: auto;width:600px; margin:0 auto;padding-top:20px;padding-bottom:40px; text-align: center;">
+                    <h2>
+                        Nuevo pedido de venta
+                    </h2>
+                    
+                    <div style="margin: 16px 0px 16px 0px;">
+                        <a href="${ctx['SALE_ORDER_URL']}" style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                            Ver Pedido
+                        </a>
+                    </div>
+                </div>
+
+            ]]></field>
+        </record>
+
+        <!-- WEBSITE TEMPLATES -->
+
+        <template id="airac_sale_order_portal_template" inherit_id="sale.sale_order_portal_content">
+            <xpath expr="//div[@id='informations']//span[@t-field='sale_order.create_date']" position="after">
+                <br/> <strong t-if="sale_order.commitment_date">Fecha de entrega compromiso:</strong> <span t-field="sale_order.commitment_date" t-options='{"widget": "date"}'/>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>

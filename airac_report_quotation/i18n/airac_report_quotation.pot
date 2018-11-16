@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* airac_report_quotation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0-20180827\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-11-06 22:16+0000\n"
+"PO-Revision-Date: 2018-11-06 22:16+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: airac_report_quotation
+#: model:ir.ui.view,arch_db:airac_report_quotation.airac_report_commitment_date
+msgid "<strong>Salesperson:</strong>"
+msgstr ""
+
+#. module: airac_report_quotation
+#: model:ir.ui.view,arch_db:airac_report_quotation.airac_report_commitment_date
+msgid "<strong>Commitment Date:</strong>"
+msgstr ""
+

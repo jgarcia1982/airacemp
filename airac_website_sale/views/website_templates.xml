@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <template id="website_new_sale_order_template" name="New sale order">
+            
+            <t t-call="website.layout">
+                <t t-set="title">Nuevo pedido</t>
+
+                <style>
+                    .head_check{
+                        margin: auto;
+                    }
+
+                    .body_check{
+                        margin: auto;
+                    }
+
+                    thead .th_check{
+                        width: 40px;
+                        text-align: center;
+                        padding-top: 16px !important;
+                    }
+
+                    tbody .th_check{
+                        width: 40px;
+                        text-align: center;
+                        padding-top: 25px !important;
+                    }
+                </style>
+
+                <div class="oe_structure">
+                    <div class="container">
+
+                        <div class="modal fade" id="saleOrderMessage" tabindex="-1" role="dialog" aria-labelledby="saleOrderMessageLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="saleOrderMessageLabel">Aviso</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true"><![CDATA[&times;]]></span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                Su pedido será revisado y en breve recibirá un correo con la cotización y fecha de entrega estimada para su aprobación.
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="send_sale_order">Aceptar</button>
+                                <button type="button" class="btn btn-default" id="close_sale_order" data-dismiss="modal">Volver</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <br/>
+                        <br/>
+                        <h1>Nuevo Pedido</h1>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-lg-9">
+
+                                <table class="table table-striped table-gray">
+                                  <thead>
+                                    <tr>
+                                      <td scope="col" class="th_check"><input type="checkbox" class="form-check-input head_check" id="so_check_all"/></td>
+                                      <th scope="col">Cantidad</th>
+                                      <th scope="col">Unidad de medida</th>
+                                      <th scope="col">SKU_AIRAC</th>
+                                      <th scope="col">SKU_Cliente</th>
+                                      <th scope="col">Descripción</th>
+                                      <th scope="col">Precio Unitario</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <t t-foreach="product_ids" t-as="product_id">
+                                        <tr>
+                                          <td class="th_check" scope="row"><input type="checkbox" class="form-check-input body_check" t-att-id="'so_check_%s' % product_id.sudo().id"/></td>
+                                          <td scope="row"><input type="text" t-att-id="'so_qty_%s' % product_id.sudo().id" value="0" class="form-control-plaintext product_qty" style="width: 50px"/></td>
+                                          <td scope="row"><span t-field="product_id.sudo().uom_id"/></td>
+                                          <td scope="row"><span t-field="product_id.sudo().airac_sku_code"/></td>
+                                          <td scope="row"><span t-field="product_id.sudo().default_code"/></td>
+                                          <td scope="row"><span t-field="product_id.sudo().name"/> <![CDATA[&nbsp;]]> <span t-field="product_id.sudo().attribute_value_ids"/></td>
+                                          <td scope="row"><span t-field="product_id.sudo().lst_price" t-options="{'widget': 'monetary'}" class="text-right"/></td>
+                                        </tr>
+                                    </t>
+                                  </tbody>
+                                </table>
+
+                            </div>
+                            <div class="col-lg-3">
+
+                                <table class="table table-striped table-gray">
+                                    <thead>
+                                        <tr>
+                                          <th scope="col" colspan="2">RESUMEN VENTA</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr scope="row">
+                                          <td>SUB-TOTAL</td>
+                                          <td>$ <span class="pull-right" id="summary_subtotal">0.00</span></td>
+                                        </tr>
+                                        <tr scope="row">
+                                          <td>IVA 16%</td>
+                                          <td>$ <span class="pull-right" id="summary_taxes">0.00</span></td>
+                                        </tr>
+                                        <tr scope="row">
+                                          <td>TOTAL NETO</td>
+                                          <td>$ <span class="pull-right" id="summary_total">0.00</span></td>
+                                        </tr>
+                                        <tr scope="row">
+                                          <td colspan="2" class="text-center">
+                                              <input type="button" class="btn btn-primary" disabled="1" id="request_sale_order" value="Solicitar" data-toggle="modal" data-target="#saleOrderMessage"/>
+                                          </td>
+                                        </tr>
+                                        <tr scope="row">
+                                          <td colspan="2">
+                                              <input type="text" class="form-control-plaintext" id="customer_so_ref" placeholder="# Orden de Compra"/>
+                                          </td>
+                                        </tr>
+                                        <tr scope="row">
+                                          <td colspan="2" class="text-center">
+                                              <input type="button" id="file_chooser" class="btn btn-default" value="Adjunto"/>
+                                              <input type="button" id="reset_file_chooser" class="btn btn-default" value="Quitar adjunto"/>
+                                              <input type="file" id="file_attachment" style="display: none"/>
+                                          </td>
+                                        </tr>
+                                        <tr scope="row">
+                                          <td colspan="2">
+                                              <input type="text" id="file_text_value" class="form-control-plaintext" placeholder="Nombre de archivo" readonly="1"/>
+                                          </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+
+                    $("#file_chooser").click(function(e){
+                        e.preventDefault();
+                        $("#file_attachment").trigger('click');
+                    });
+
+                    $('#file_attachment').on("change", function(){ 
+                        $("#file_text_value").val(this.value.replace(/C:\\fakepath\\/i, ''));
+                    });
+
+                    $("#reset_file_chooser").click(function(e){
+                        e.preventDefault();
+                        $("#file_attachment").val('');
+                        $("#file_text_value").val('');
+                    });
+
+                    $("#send_sale_order").click(function(e){
+
+                        var data = {
+                            'ids': [],
+                            'qty': []
+                        }
+                        
+                        $('.body_check').each(function() {
+                            
+                            id_parts = this.id.split('_')
+
+                            if(this.checked) {
+                                data['ids'].push(id_parts[2]);
+                                data['qty'].push($('#so_qty_' + id_parts[2]).val());
+                            }
+
+                        });
+
+                        var formData = new FormData();
+                        formData.append('file', $('#file_attachment')[0].files[0]);
+                        formData.append('ids', data['ids'].toString());
+                        formData.append('qty', data['qty'].toString());
+                        formData.append('customer_so_ref', $('#customer_so_ref').val());
+
+                        $.ajax({
+                            type: "POST",
+                            data : formData,
+                            url: '/airac/create_sale_order',
+                            processData: false,
+                            contentType: false,
+                            success: function(data){
+
+                                // RESET DATA
+                                $('#summary_subtotal').html('0.00');
+                                $('#summary_taxes').html('0.00');
+                                $('#summary_total').html('0.00');
+                                $('#request_sale_order').attr('disabled','1');
+                                $("#file_attachment").val('');
+                                $("#file_text_value").val('');
+                                $("#customer_so_ref").val('');
+                                $("#so_check_all").prop('checked', false);
+                                $('.body_check').each(function() {
+                                    id_parts = this.id.split('_')
+                                    this.checked = false;
+                                    $('#so_qty_' + id_parts[2]).val('0');
+                                });
+
+                                // CLOSE MODAL
+                                $("#close_sale_order").trigger('click');
+
+                                window.location = '/customer_orders_state';
+                            }
+                        });
+                        
+                    });
+                    
+                    function updateSaleOrder(){
+
+                        var data = {
+                            'ids': [],
+                            'qty': []
+                        }
+                        
+                        $('.body_check').each(function() {
+                            
+                            id_parts = this.id.split('_')
+
+                            if(this.checked) {
+                                data['ids'].push(id_parts[2]);
+                                data['qty'].push($('#so_qty_' + id_parts[2]).val());
+                            }
+
+                        });
+
+                        if(data['ids'].length == 0){
+                            $('#summary_subtotal').html('0.00');
+                            $('#summary_taxes').html('0.00');
+                            $('#summary_total').html('0.00');
+                            $('#request_sale_order').attr('disabled','1');
+                            return 0;
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            data: {
+                                'ids': data['ids'].toString(),
+                                'qty': data['qty'].toString()
+                            },
+                            url: '/airac/update_order_values',
+                            dataType: "json",
+                            success: function(data){
+                                $('#summary_subtotal').html(data['subtotal']);
+                                $('#summary_taxes').html(data['taxes']);
+                                $('#summary_total').html(data['total']);
+                                $('#request_sale_order').removeAttr('disabled');
+                            }
+                        });
+                    }
+
+                    // Toggle check all
+                    $('#so_check_all').click(function(event) {   
+                        if(this.checked) {
+                            // Iterate each checkbox
+                            $('.body_check').each(function() {
+                                id_parts = this.id.split('_');
+                                $('#so_qty_' + id_parts[2]).val('1');
+                                this.checked = true;
+                            });
+                        } else {
+                            $('.body_check').each(function() {
+                                id_parts = this.id.split('_');
+                                $('#so_qty_' + id_parts[2]).val('0');
+                                this.checked = false;                       
+                            });
+                        }
+
+                        updateSaleOrder();
+                    });
+
+                    // Set default qty
+                    $('.body_check').click(function(event) {
+
+                        id_parts = this.id.split('_')
+
+                        if(this.checked) {
+                            $('#so_qty_' + id_parts[2]).val('1');
+                        } else {
+                            $('#so_qty_' + id_parts[2]).val('0');
+                        }
+
+                        updateSaleOrder();
+
+                    });
+
+                    $('.product_qty').on('change', function() {
+                        updateSaleOrder();
+                    });
+                </script>
+
+            </t>
+
+        </template>
+
+        <template id="website_sale_order_state_template" name="Sale Order state">
+            
+            <t t-call="website.layout">
+                <t t-set="title">Estatus de Pedidos</t>
+
+                <div class="oe_structure">
+                    <div class="container">
+
+                        <br/>
+                        <br/>
+                        <h1>Pedidos</h1>
+                        <br/>
+
+                        <table class="table table-striped table-gray">
+                          <thead>
+                            <tr>
+                              <th scope="col">Numero Pedido</th>
+                              <th scope="col">Orden de Compra Ref</th>
+                              <th scope="col">Fecha de Entrega</th>
+                              <th scope="col">Estatus</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <t t-foreach="order_ids" t-as="order_id">
+                                <tr>
+                                  <td scope="row"><a t-att-href="'/my/orders/%s' % order_id.sudo().id"><span t-field="order_id.sudo().name"/></a></td>
+                                  <td scope="row"><span t-field="order_id.sudo().client_order_ref"/></td>
+                                  <td scope="row"><span t-field="order_id.sudo().commitment_date"/></td>
+                                  <td scope="row"><span t-field="order_id.sudo().state"/></td>
+                                </tr>
+                            </t>
+                          </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+
+            </t>
+
+        </template>
+
+    </data>
+</odoo>

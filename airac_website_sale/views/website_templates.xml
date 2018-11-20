@@ -80,7 +80,7 @@
                                           <td scope="row"><span t-field="product_id.sudo().uom_id"/></td>
                                           <td scope="row"><span t-field="product_id.sudo().airac_sku_code"/></td>
                                           <td scope="row"><span t-field="product_id.sudo().default_code"/></td>
-                                          <td scope="row"><span t-field="product_id.sudo().name"/> <![CDATA[&nbsp;]]> <span t-field="product_id.sudo().attribute_value_ids"/></td>
+                                          <td scope="row"><span t-field="product_id.sudo().name"/> <![CDATA[&nbsp;]]></td>
                                           <td scope="row"><span t-field="product_id.sudo().lst_price" t-options="{'widget': 'monetary'}" class="text-right"/></td>
                                         </tr>
                                     </t>

@@ -23,7 +23,7 @@
         'data/website_data.xml',
         'views/website_templates.xml',
         'views/res_partner.xml',
-        'views/product_product.xml',
+        'views/product_template.xml',
         'views/templates.xml',
     ],
     "post_init_hook": "post_init_hook"

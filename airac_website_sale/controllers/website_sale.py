@@ -110,7 +110,7 @@ class WebsiteSale(http.Controller):
         
         for employee_id in http.request.env['hr.employee'].sudo().search([('job_id', 'in', job_ids)]):
 
-            if not employee_id.work_email.strip():
+            if not (employee_id.work_email or ' ').strip():
                 continue
 
             template = http.request.env.ref('airac_website_sale.new_saleorder_template')

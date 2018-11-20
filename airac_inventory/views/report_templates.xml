@@ -1,0 +1,35 @@
+<openerp>
+    <data>
+
+        <template id="airac_stock_picking_report" inherit_id="stock.report_picking">
+            <xpath expr="//div[hasclass('row')]//div[2]" position="after">
+                <div t-if="o.picking_type_id.code=='outgoing' and o.airac_ship_company_id">
+                    <span><strong>Compañia de entrega:</strong></span>
+                </div>
+                <div t-if="o.airac_ship_company_id">
+                    <div t-field="o.airac_ship_company_id"/>
+                </div>
+                <div t-if="o.picking_type_id.code=='outgoing' and o.airac_delivery_guide">
+                    <span><strong>Numero de Guia:</strong></span>
+                </div>
+                <div t-if="o.airac_delivery_guide">
+                    <div t-field="o.airac_delivery_guide"/>
+                </div>
+            </xpath>
+        </template>
+
+        <template id="airac_picking_delivery_report" inherit_id="sale_stock.report_delivery_document_inherit_sale_stock">
+            <xpath expr="//div[hasclass('justify-content-end')]" position="inside">
+                <div class="col-4" t-if="o.sudo().airac_ship_company_id">
+                    <strong>Compañia de entrega:</strong>
+                    <p t-field="o.sudo().airac_ship_company_id"/>
+                </div>
+                <div class="col-4" t-if="o.sudo().airac_delivery_guide">
+                    <strong>Numero de Guia:</strong>
+                    <p t-field="o.sudo().airac_delivery_guide"/>
+                </div>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>

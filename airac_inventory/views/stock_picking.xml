@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!-- SALE ORDER INHERIT VIEWS -->
+
+        <record id="stock_picking_sales_form" model="ir.ui.view">
+            <field name="name">stock.picking.sales.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='move_type']" position="after">
+                    <field name="airac_ship_company_id"/>
+                    <field name="airac_delivery_guide"/>
+                </xpath>
+
+            </field>
+
+        </record>
+
+    </data>
+</odoo>

@@ -30,7 +30,7 @@ class WebsiteSale(http.Controller):
         customer_ids.append(partner_id.id)
         order_ids = http.request.env['sale.order'].sudo().search([
             ('partner_id', 'in', customer_ids),
-            ('state', 'in', ['sent','sale','send','done'])
+            ('state', 'in', ['draft','sent','sale','send','done'])
         ])
 
         return http.request.render('airac_website_sale.website_sale_order_state_template', {

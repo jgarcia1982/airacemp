@@ -324,7 +324,10 @@
                           <tbody>
                             <t t-foreach="order_ids" t-as="order_id">
                                 <tr>
-                                  <td scope="row"><a t-att-href="'/my/orders/%s' % order_id.sudo().id"><span t-field="order_id.sudo().name"/></a></td>
+                                  <td scope="row">
+                                    <span t-if="order_id.sudo().state == 'draft'" t-field="order_id.sudo().name"/>
+                                    <a t-if="order_id.sudo().state != 'draft'" t-att-href="'/my/orders/%s' % order_id.sudo().id"><span t-field="order_id.sudo().name"/></a>
+                                  </td>
                                   <td scope="row"><span t-field="order_id.sudo().client_order_ref"/></td>
                                   <td scope="row"><span t-field="order_id.sudo().commitment_date"/></td>
                                   <td scope="row"><span t-field="order_id.sudo().state"/></td>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <!-- AIRAC CUSTOMER SKU -->
+
+        <record id="airac_customer_sku_action" model="ir.actions.server">
+            <field name="name">SKU Clientes</field>
+            <field name="type">ir.actions.server</field>
+            <field name="model_id" ref="model_airac_customer_sku"/>
+            <field name="state">code</field>
+            <field name="code">action = env['airac.customer.sku'].prepare_wizard()</field>
+        </record>
+
+        <record model="ir.ui.view" id="airac_customer_sku_form_view">
+            <field name="name">airac_customer_sku_form</field>
+            <field name="model">airac.customer.sku</field>
+            <field name="arch" type="xml">
+                <form string="SKU Clientes">
+
+                  <field name="product_id" invisible="1"/>
+                  <field name="airac_sku_line_ids">
+                    <tree editable="top" create="0" delete="0">
+                      <field name="customer_id" readonly="1"/>
+                      <field name="customer_sku"/>
+                    </tree>
+                  </field>
+
+                  <footer>
+                      <button name="update_customer_sku" type="object" string="Actualizar" class="oe_highlight"/>
+                      or
+                      <button special="cancel" string="Cancel"/>
+                  </footer>
+
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -17,7 +17,8 @@ class WebsiteSale(http.Controller):
         user_id = http.request.env['res.users'].sudo().browse([http.request.env.uid])
 
         return http.request.render('airac_website_sale.website_new_sale_order_template', {
-            'product_ids': user_id.sudo().partner_id.airac_user_product_ids
+            'product_ids': user_id.sudo().partner_id.airac_user_product_ids,
+            'partner_id': user_id.sudo().partner_id
         })
 
     @http.route('/customer_orders_state', type='http', auth="user", website=True)
@@ -30,7 +31,7 @@ class WebsiteSale(http.Controller):
         customer_ids.append(partner_id.id)
         order_ids = http.request.env['sale.order'].sudo().search([
             ('partner_id', 'in', customer_ids),
-            ('state', 'in', ['sent','sale','send','done'])
+            ('state', 'in', ['draft','sent','sale','send','done'])
         ])
 
         return http.request.render('airac_website_sale.website_sale_order_state_template', {
@@ -46,7 +47,7 @@ class WebsiteSale(http.Controller):
         index = 0
         qty = kw['qty'].split(',')
 
-        for product_id in http.request.env['product.product'].sudo().search([('id', 'in', kw['ids'].split(','))]):
+        for product_id in http.request.env['product.template'].sudo().search([('id', 'in', kw['ids'].split(','))]):
 
             prod_subtotal = product_id.sudo().lst_price * float(qty[index])
             prod_taxes = prod_subtotal * (sum([tax_id.sudo().amount for tax_id in product_id.sudo().taxes_id]) / 100.0)

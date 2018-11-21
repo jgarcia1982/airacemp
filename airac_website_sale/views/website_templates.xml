@@ -330,7 +330,7 @@
                                   </td>
                                   <td scope="row"><span t-field="order_id.sudo().client_order_ref"/></td>
                                   <td scope="row"><span t-field="order_id.sudo().commitment_date"/></td>
-                                  <td scope="row"><span t-field="order_id.sudo().state"/></td>
+                                  <td scope="row"><span t-esc="order_id.sudo().airac_web_state()"/></td>
                                 </tr>
                             </t>
                           </tbody>

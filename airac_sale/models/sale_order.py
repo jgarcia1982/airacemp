@@ -26,6 +26,39 @@ class SaleOrder(models.Model):
     commitment_date = fields.Datetime(
         string='Fecha de entrega compromiso'
     )
+    state = fields.Selection(
+        string='Estado',
+        selection=[
+            ('draft', 'Abierto'),
+            ('sent', 'Presupuesto enviado'),
+            ('sale', 'Confirmado'),
+            ('production', 'En Producción'),
+            ('ready', 'Terminado'),
+            ('done', 'Bloqueado'),
+            ('cancel', 'Cancelado'),
+        ]
+    )
+
+    STATE_MAP = {
+        'draft': 'Abierto',
+        'sent': 'Presupuesto enviado',
+        'sale': 'Confirmado',
+        'production': 'En Producción',
+        'ready': 'Terminado',
+        'done': 'Bloqueado',
+        'cancel': 'Cancelado'
+    }
+
+    def airac_web_state(self):
+        self.ensure_one()
+
+        if self.airac_production_state == 'P':
+            return self.STATE_MAP['production']
+
+        if self.airac_production_state == 'R':
+            return self.STATE_MAP['ready']
+
+        return self.STATE_MAP[self.state]
 
     @api.multi
     def action_so_production(self):

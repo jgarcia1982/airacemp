@@ -2,8 +2,8 @@
 
 from odoo import api, fields, models
 
-class product_template(models.Model):
-    _inherit = 'product.template'
+class product_product(models.Model):
+    _inherit = 'product.product'
 
     airac_web_customer_ids = fields.Many2many(
         string='Clientes',

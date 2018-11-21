@@ -9,7 +9,7 @@ class ResPartner(models.Model):
 
     airac_user_product_ids = fields.Many2many(
         string='Productos Autorizados',
-        comodel_name='product.template',
+        comodel_name='product.product',
         relation='airac_website_product_customer',
         column1='customer_id',
         column2='product_id'

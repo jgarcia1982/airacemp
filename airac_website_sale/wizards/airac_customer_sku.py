@@ -10,7 +10,7 @@ class airac_customer_sku(models.TransientModel):
 
     product_id = fields.Many2one(
         string='Producto',
-        comodel_name='product.template'
+        comodel_name='product.product'
     )
     airac_sku_line_ids = fields.One2many(
         string='SKU Clientes',

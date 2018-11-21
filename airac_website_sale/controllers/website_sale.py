@@ -47,7 +47,7 @@ class WebsiteSale(http.Controller):
         index = 0
         qty = kw['qty'].split(',')
 
-        for product_id in http.request.env['product.template'].sudo().search([('id', 'in', kw['ids'].split(','))]):
+        for product_id in http.request.env['product.product'].sudo().search([('id', 'in', kw['ids'].split(','))]):
 
             prod_subtotal = product_id.sudo().lst_price * float(qty[index])
             prod_taxes = prod_subtotal * (sum([tax_id.sudo().amount for tax_id in product_id.sudo().taxes_id]) / 100.0)

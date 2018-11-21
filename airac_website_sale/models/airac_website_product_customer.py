@@ -7,7 +7,7 @@ class airac_website_product_customer(models.Model):
 
     product_id = fields.Many2one(
         string='Producto',
-        comodel_name='product.template'
+        comodel_name='product.product'
     )
     customer_id = fields.Many2one(
         string='Cliente',

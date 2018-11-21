@@ -78,8 +78,8 @@
                                           <td class="th_check" scope="row"><input type="checkbox" class="form-check-input body_check" t-att-id="'so_check_%s' % product_id.sudo().id"/></td>
                                           <td scope="row"><input type="text" t-att-id="'so_qty_%s' % product_id.sudo().id" value="0" class="form-control-plaintext product_qty" style="width: 50px"/></td>
                                           <td scope="row"><span t-field="product_id.sudo().uom_id"/></td>
-                                          <td scope="row"><span t-field="product_id.sudo().airac_sku_code"/></td>
                                           <td scope="row"><span t-field="product_id.sudo().default_code"/></td>
+                                          <td scope="row"><span t-field="product_id.sudo().airac_sku_code"/></td>
                                           <td scope="row"><span t-field="product_id.sudo().name"/> <![CDATA[&nbsp;]]></td>
                                           <td scope="row"><span t-field="product_id.sudo().lst_price" t-options="{'widget': 'monetary'}" class="text-right"/></td>
                                         </tr>

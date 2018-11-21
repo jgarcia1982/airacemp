@@ -17,7 +17,8 @@ class WebsiteSale(http.Controller):
         user_id = http.request.env['res.users'].sudo().browse([http.request.env.uid])
 
         return http.request.render('airac_website_sale.website_new_sale_order_template', {
-            'product_ids': user_id.sudo().partner_id.airac_user_product_ids
+            'product_ids': user_id.sudo().partner_id.airac_user_product_ids,
+            'partner_id': user_id.sudo().partner_id
         })
 
     @http.route('/customer_orders_state', type='http', auth="user", website=True)

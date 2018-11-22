@@ -15,9 +15,11 @@ class WebsiteSale(http.Controller):
     def new_sale_order(self, **kw):
 
         user_id = http.request.env['res.users'].sudo().browse([http.request.env.uid])
+        template_ids = [tid.id for tid in user_id.sudo().partner_id.airac_user_product_ids]
+        product_ids = http.request.env['product.product'].sudo().search([('product_tmpl_id', 'in', template_ids)])
 
         return http.request.render('airac_website_sale.website_new_sale_order_template', {
-            'product_ids': user_id.sudo().partner_id.airac_user_product_ids,
+            'product_ids': product_ids,
             'partner_id': user_id.sudo().partner_id
         })
 

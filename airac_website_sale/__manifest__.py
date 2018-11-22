@@ -21,7 +21,6 @@
     # always loaded
     'data': [
         'data/website_data.xml',
-        'wizards/airac_customer_sku.xml',
         'views/website_templates.xml',
         'views/res_partner.xml',
         'views/product_template.xml',

@@ -22,7 +22,7 @@
                         <button string="Terminado" type="object" name="action_so_end" class="oe_link" attrs="{'invisible': ['|',('state', '!=', 'sale'), ('airac_production_state', '!=', 'P')]}"/>
                     </div>
 
-                    <field name="airac_stock_prod_id" attrs="{'invisible': [('airac_production_state', '!=', 'T')]}" readonly="1"/>
+                    <field name="airac_stock_prod_id" attrs="{'invisible': [('airac_production_state', '!=', 'R')]}" readonly="1"/>
                 </xpath>
 
             </field>

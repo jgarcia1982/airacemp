@@ -3,16 +3,16 @@
     <data noupdate="1">
 
         <record id="airac_production_sequence" model="ir.sequence">
-            <field name="name">Producción AIRAC</field>
+            <field name="name">Producción MKT_IMP</field>
             <field name="code">airac.production</field>
-            <field name="prefix">APROD/</field>
+            <field name="prefix">MKTIMP/</field>
             <field name="padding">5</field>
             <field name="number_next">1</field>
             <field name="number_increment">1</field>
         </record>
 
         <record id="airac_stock_type_production" model="stock.picking.type">
-            <field name="name">Producción AIRAC</field>
+            <field name="name">Producción MKT_IMP</field>
             <field name="code">incoming</field>
             <field name="sequence_id" ref="airac_inventory.airac_production_sequence"/>
             <field name="return_picking_type_id" ref="stock.picking_type_out"/>

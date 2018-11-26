@@ -42,7 +42,7 @@
                                 </button>
                               </div>
                               <div class="modal-body">
-                                Su pedido será revisado y en breve recibirá un correo con la cotización y fecha de entrega estimada para su aprobación.
+                                Su pedido será revisado y en breve recibirá un correo con la confirmación y fecha de entrega estimada para su aprobación.
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" id="send_sale_order">Aceptar</button>

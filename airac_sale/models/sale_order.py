@@ -81,6 +81,9 @@ class SaleOrder(models.Model):
 
         for so_line in self.order_line:
 
+            if so_line.product_id.type != 'product':
+                continue
+
             move_id = self.env['stock.move'].create({
                 'name': picking_seq._next(),
                 'picking_id': picking_id.id,
